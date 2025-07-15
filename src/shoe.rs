@@ -3,6 +3,8 @@ use rand::{Rng, rngs::ThreadRng};
 
 pub struct Shoe {
     cards: Vec<Card>,
+    decks: usize,
+    count: isize,
     rng: ThreadRng,
 }
 
@@ -20,6 +22,8 @@ impl Shoe {
 
         Shoe {
             cards,
+            decks,
+            count: 0,
             rng: rand::rng(),
         }
     }
@@ -29,11 +33,21 @@ impl Shoe {
             return None;
         }
         let idx = self.rng.random_range(0..self.cards.len());
-        Some(self.cards.swap_remove(idx))
+        let card = self.cards.swap_remove(idx);
+        self.count += card.weight();
+        Some(card)
     }
 
     pub fn is_empty(&self) -> bool {
         self.cards.is_empty()
+    }
+
+    pub fn count(&self) -> isize {
+        self.count
+    }
+
+    pub fn true_count(&self) -> isize {
+        self.count / (self.decks as isize)
     }
 
     pub fn len(&self) -> usize {

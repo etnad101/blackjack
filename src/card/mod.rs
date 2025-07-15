@@ -86,6 +86,10 @@ impl Card {
     pub fn value(&self) -> Value {
         self.rank.value()
     }
+
+    pub fn weight(&self) -> isize {
+        self.rank.weight()
+    }
 }
 
 impl std::fmt::Display for Card {

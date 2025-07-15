@@ -48,6 +48,24 @@ impl Rank {
             Rank::Ten | Rank::Jack | Rank::Queen | Rank::King => Value::Hard(10),
         }
     }
+
+    pub fn weight(&self) -> isize {
+        match self {
+            Rank::Two => 1,
+            Rank::Three => 1,
+            Rank::Four => 1,
+            Rank::Five => 1,
+            Rank::Six => 1,
+            Rank::Seven => 0,
+            Rank::Eight => 0,
+            Rank::Nine => 0,
+            Rank::Ten => -1,
+            Rank::Jack => -1,
+            Rank::Queen => -1,
+            Rank::King => -1,
+            Rank::Ace => -1,
+        }
+    }
 }
 
 impl std::fmt::Display for Rank {
