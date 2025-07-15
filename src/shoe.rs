@@ -1,7 +1,9 @@
 use super::card::{Card, rank::Rank, suit::Suit};
+use rand::{Rng, rngs::ThreadRng};
 
 pub struct Shoe {
     cards: Vec<Card>,
+    rng: ThreadRng,
 }
 
 impl Shoe {
@@ -16,6 +18,25 @@ impl Shoe {
             }
         }
 
-        Shoe { cards }
+        Shoe {
+            cards,
+            rng: rand::rng(),
+        }
+    }
+
+    pub fn draw_card(&mut self) -> Option<Card> {
+        if self.cards.is_empty() {
+            return None;
+        }
+        let idx = self.rng.random_range(0..self.cards.len());
+        Some(self.cards.swap_remove(idx))
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.cards.is_empty()
+    }
+
+    pub fn len(&self) -> usize {
+        self.cards.len()
     }
 }
