@@ -1,7 +1,7 @@
 pub mod rank;
 pub mod suit;
 
-use std::cmp::min;
+use std::cmp::{max, min};
 
 use rank::Rank;
 use suit::Suit;
@@ -30,6 +30,13 @@ impl Value {
                 }
             }
             Value::Hard(_) => self,
+        }
+    }
+
+    pub fn raw(&self) -> u8 {
+        match self {
+            Value::Soft(x, y) => max(*x, *y),
+            Value::Hard(x) => *x,
         }
     }
 }
@@ -64,7 +71,7 @@ impl std::fmt::Display for Value {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct Card {
     suit: Suit,
     rank: Rank,
